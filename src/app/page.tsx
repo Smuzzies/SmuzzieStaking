@@ -101,12 +101,77 @@ export default function Page() {
 
           {/* Timer */}
           <div className="bg-dark-card rounded-xl border border-dark-border p-4">
-            <h2 className="text-lg font-semibold mb-2">Next Reward Distribution</h2>
+            <h2 className="text-lg font-semibold mb-4">Next Reward Distribution</h2>
             <div className="flex flex-col items-center justify-center h-[calc(100%-2rem)]">
-              <div className="text-4xl font-bold font-mono text-[#fdc603] mb-2">
-                {timeLeft}
+              <div className="flex items-center gap-0.5 sm:gap-2">
+                {/* Hours */}
+                <div className="flex flex-col items-center">
+                  <div className="flex gap-0.5 sm:gap-1">
+                    <div className="relative flex flex-col items-center">
+                      <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
+                        <span className="font-mono text-lg sm:text-2xl font-bold text-black">
+                          {timeLeft.split(':')[0].charAt(0)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="relative flex flex-col items-center">
+                      <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
+                        <span className="font-mono text-lg sm:text-2xl font-bold text-black">
+                          {timeLeft.split(':')[0].charAt(1)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-white text-[10px] sm:text-xs mt-1">HOURS</span>
+                </div>
+
+                <span className="font-mono text-lg sm:text-2xl font-bold text-white/30 self-start mt-2 sm:mt-3">|</span>
+
+                {/* Minutes */}
+                <div className="flex flex-col items-center">
+                  <div className="flex gap-0.5 sm:gap-1">
+                    <div className="relative flex flex-col items-center">
+                      <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
+                        <span className="font-mono text-lg sm:text-2xl font-bold text-black">
+                          {timeLeft.split(':')[1].charAt(0)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="relative flex flex-col items-center">
+                      <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
+                        <span className="font-mono text-lg sm:text-2xl font-bold text-black">
+                          {timeLeft.split(':')[1].charAt(1)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-white text-[10px] sm:text-xs mt-1">MINUTES</span>
+                </div>
+
+                <span className="font-mono text-lg sm:text-2xl font-bold text-white/30 self-start mt-2 sm:mt-3">|</span>
+
+                {/* Seconds */}
+                <div className="flex flex-col items-center">
+                  <div className="flex gap-0.5 sm:gap-1">
+                    <div className="relative flex flex-col items-center">
+                      <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
+                        <span className="font-mono text-lg sm:text-2xl font-bold text-black">
+                          {timeLeft.split(':')[2].charAt(0)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="relative flex flex-col items-center">
+                      <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
+                        <span className="font-mono text-lg sm:text-2xl font-bold text-black">
+                          {timeLeft.split(':')[2].charAt(1)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-white text-[10px] sm:text-xs mt-1">SECONDS</span>
+                </div>
               </div>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-400 text-xs mt-3">
                 Daily reset at 23:59 UTC
               </p>
             </div>
@@ -121,33 +186,32 @@ export default function Page() {
           </div>
           <div className="grid grid-cols-7 gap-2">
             {weekProgress.map(({ day, status, isCurrent }) => (
-              <div 
-                key={day} 
-                className={`flex flex-col items-center p-2 rounded-lg border ${
-                  isCurrent ? 'border-[#fdc603]' : 'border-dark-border'
-                }`}
-              >
-                <span className="text-sm font-medium mb-1">{day}</span>
+              <div key={day} className="flex flex-col items-center p-2 rounded-lg">
+                <span className={`text-sm font-medium mb-1 px-2 py-0.5 rounded ${
+                  isCurrent ? 'bg-black/90' : ''
+                }`}>
+                  {day.slice(0, 3)}
+                </span>
                 {status === 'claimed' ? (
                   <div className="text-green-400 flex items-center gap-1">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-xs">Claimed</span>
+                    <span className="text-xs hidden sm:inline">Claimed</span>
                   </div>
                 ) : status === 'missed' ? (
                   <div className="text-red-400 flex items-center gap-1">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-xs">Missed</span>
+                    <span className="text-xs hidden sm:inline">Missed</span>
                   </div>
                 ) : (
                   <div className="text-gray-500 flex items-center gap-1">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-xs">Unclaimed</span>
+                    <span className="text-xs hidden sm:inline">Unclaimed</span>
                   </div>
                 )}
               </div>

@@ -1,5 +1,8 @@
 'use client'
 
+import { useState } from 'react'
+import { NFTModal } from './NFTModal'
+
 interface NFTMetadata {
   name: string;
   image: string;
@@ -19,6 +22,8 @@ interface NFTGridProps {
 }
 
 export function NFTGrid({ ownedTokenIds, nftMetadata, isLoading }: NFTGridProps) {
+  const [selectedNFT, setSelectedNFT] = useState<NFTMetadata | null>(null);
+
   return (
     <div className="min-h-[200px] relative">
       {isLoading ? (
@@ -49,12 +54,21 @@ export function NFTGrid({ ownedTokenIds, nftMetadata, isLoading }: NFTGridProps)
         <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
           {nftMetadata.length > 0 ? (
             nftMetadata.map((nft, index) => (
-              <div key={index} className="bg-dark-card rounded-lg overflow-hidden border border-dark-border hover:transform hover:-translate-y-1 transition-transform">
-                <img 
-                  src={nft.image}
-                  alt={nft.name}
-                  className="w-full aspect-square object-cover"
-                />
+              <div 
+                key={index} 
+                className="bg-dark-card rounded-lg overflow-hidden border border-dark-border hover:transform hover:-translate-y-1 transition-transform cursor-pointer group"
+                onClick={() => setSelectedNFT(nft)}
+              >
+                <div className="relative">
+                  <img 
+                    src={nft.image}
+                    alt={nft.name}
+                    className="w-full aspect-square object-cover group-hover:opacity-90 transition-opacity"
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="text-white text-sm">Click to view</span>
+                  </div>
+                </div>
                 <div className="p-2">
                   <h3 className="text-sm font-semibold">{nft.name}</h3>
                   {nft.rank && (
@@ -64,7 +78,12 @@ export function NFTGrid({ ownedTokenIds, nftMetadata, isLoading }: NFTGridProps)
                       <span className="text-gray-600">/ 4025</span>
                     </div>
                   )}
-                  <button className="w-full bg-primary hover:bg-primary-hover text-white font-semibold text-xs py-1 px-2 rounded transition-colors">
+                  <button 
+                    className="w-full bg-primary hover:bg-primary-hover text-white font-semibold text-xs py-1 px-2 rounded transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent modal from opening when clicking stake
+                    }}
+                  >
                     Stake
                   </button>
                 </div>
@@ -75,6 +94,12 @@ export function NFTGrid({ ownedTokenIds, nftMetadata, isLoading }: NFTGridProps)
           )}
         </div>
       )}
+
+      <NFTModal 
+        isOpen={!!selectedNFT}
+        onClose={() => setSelectedNFT(null)}
+        nft={selectedNFT || { name: '', image: '' }}
+      />
     </div>
-  )
+  );
 } 
