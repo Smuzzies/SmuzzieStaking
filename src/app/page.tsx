@@ -70,6 +70,9 @@ export default function Page() {
   const weekProgress = getDayStatus();
   const claimedDays = weekProgress.filter(day => day.status === 'claimed').length;
 
+  // Add a check for timeLeft and provide a default value
+  const timeParts = timeLeft?.split(':') || ['00', '00', '00'];
+
   return (
     <div className="min-h-screen bg-dark py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1000px] mx-auto">
@@ -110,14 +113,14 @@ export default function Page() {
                     <div className="relative flex flex-col items-center">
                       <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
                         <span className="font-mono text-lg sm:text-2xl font-bold text-black">
-                          {timeLeft.split(':')[0].charAt(0)}
+                          {timeParts[0]?.charAt(0) || '0'}
                         </span>
                       </div>
                     </div>
                     <div className="relative flex flex-col items-center">
                       <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
                         <span className="font-mono text-lg sm:text-2xl font-bold text-black">
-                          {timeLeft.split(':')[0].charAt(1)}
+                          {timeParts[0]?.charAt(1) || '0'}
                         </span>
                       </div>
                     </div>
@@ -133,14 +136,14 @@ export default function Page() {
                     <div className="relative flex flex-col items-center">
                       <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
                         <span className="font-mono text-lg sm:text-2xl font-bold text-black">
-                          {timeLeft.split(':')[1].charAt(0)}
+                          {timeParts[1]?.charAt(0) || '0'}
                         </span>
                       </div>
                     </div>
                     <div className="relative flex flex-col items-center">
                       <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
                         <span className="font-mono text-lg sm:text-2xl font-bold text-black">
-                          {timeLeft.split(':')[1].charAt(1)}
+                          {timeParts[1]?.charAt(1) || '0'}
                         </span>
                       </div>
                     </div>
@@ -156,14 +159,14 @@ export default function Page() {
                     <div className="relative flex flex-col items-center">
                       <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
                         <span className="font-mono text-lg sm:text-2xl font-bold text-black">
-                          {timeLeft.split(':')[2].charAt(0)}
+                          {timeParts[2]?.charAt(0) || '0'}
                         </span>
                       </div>
                     </div>
                     <div className="relative flex flex-col items-center">
                       <div className="bg-[#fdc603] w-8 h-8 sm:w-12 sm:h-12 rounded-md flex items-center justify-center shadow-lg">
                         <span className="font-mono text-lg sm:text-2xl font-bold text-black">
-                          {timeLeft.split(':')[2].charAt(1)}
+                          {timeParts[2]?.charAt(1) || '0'}
                         </span>
                       </div>
                     </div>
